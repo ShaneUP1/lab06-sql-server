@@ -142,5 +142,64 @@ describe('app routes', () => {
       expect(data.body).toEqual(expectation);
       expect(allFourteeners.body.length).toEqual(7);
     });
+
+    test('modifies an existing fourteener and returns it', async () => {
+
+      const expectation =
+      {
+        'id': 1,
+        'name': 'Mt. Harvard',
+        'elevation': 14420,
+        'mtn_range': 'Sawatch Range',
+        'drive_to_top': false,
+        'owner_id': 1,
+      };
+      const data = await fakeRequest(app)
+        .put('/fourteeners/1')
+        .send({
+          name: 'Mt. Harvard',
+          elevation: 14420,
+          mtn_range: 'Sawatch Range',
+          drive_to_top: false,
+          owner_id: 1
+        })
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      const allFourteeners = await fakeRequest(app)
+        .get('/fourteeners')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+      expect(allFourteeners.body.length).toEqual(6);
+    });
+
+    test.only('deletes one fourteener from the list', async () => {
+
+      const expectation =
+      {
+        id: 1,
+        name: 'Mt. Evans',
+        elevation: 14264,
+        mtn_range: 'Front Range',
+        drive_to_top: true,
+        owner_id: 1,
+      };
+
+      const data = await fakeRequest(app)
+        .delete('/fourteeners/1')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      const allFourteeners = await fakeRequest(app)
+        .get('/fourteeners')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+      expect(allFourteeners.body.length).toEqual(5);
+    });
+
   });
 });
