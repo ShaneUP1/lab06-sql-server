@@ -172,18 +172,18 @@ describe('app routes', () => {
         .expect(200);
 
       expect(data.body).toEqual(expectation);
-      expect(allFourteeners.body.length).toEqual(6);
+      expect(allFourteeners.body.length).toEqual(7);
     });
 
-    test.only('deletes one fourteener from the list', async () => {
+    test('deletes one fourteener from the list', async () => {
 
       const expectation =
       {
         id: 1,
-        name: 'Mt. Evans',
-        elevation: 14264,
-        mtn_range: 'Front Range',
-        drive_to_top: true,
+        name: 'Mt. Harvard',
+        elevation: 14420,
+        mtn_range: 'Sawatch Range',
+        drive_to_top: false,
         owner_id: 1,
       };
 
@@ -198,7 +198,7 @@ describe('app routes', () => {
         .expect(200);
 
       expect(data.body).toEqual(expectation);
-      expect(allFourteeners.body.length).toEqual(5);
+      expect(allFourteeners.body.length).toEqual(6);
     });
 
   });
