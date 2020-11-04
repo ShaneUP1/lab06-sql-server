@@ -27,10 +27,20 @@ async function run() {
     await Promise.all(
       fourteeners.map(fourteener => {
         return client.query(`
-                    INSERT INTO fourteeners (name, elevation, mtn_range, drive_to_top, owner_id)
+                    INSERT INTO fourteeners (name, elevation, mtn_range_id, drive_to_top, owner_id)
                     VALUES ($1, $2, $3, $4, $5);
                 `,
-          [fourteener.name, fourteener.elevation, fourteener.mtn_range, fourteener.drive_to_top, user.id]);
+          [fourteener.name, fourteener.elevation, fourteener.mtn_range_id, fourteener.drive_to_top, user.id]);
+      })
+    );
+
+    await Promise.all(
+      mtn_ranges.map(mtn_range => {
+        return client.query(`
+                    INSERT INTO mtn_ranges (name)
+                    VALUES ($1);
+                `,
+          [mtn_range.name]);
       })
     );
 
