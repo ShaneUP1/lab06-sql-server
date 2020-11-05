@@ -38,49 +38,43 @@ describe('app routes', () => {
           'id': 1,
           'name': 'Mt. Evans',
           'elevation': 14264,
-          'mtn_range': 'Front Range',
           'drive_to_top': true,
-          'owner_id': 1,
+          'range_name': 'Front Range'
         },
         {
           'id': 2,
           'name': 'Quandary Peak',
           'elevation': 14265,
-          'mtn_range': 'Tenmile Range',
           'drive_to_top': false,
-          'owner_id': 1,
+          'range_name': 'Tenmile Range'
         },
         {
           'id': 3,
           'name': 'Mt. Massive',
           'elevation': 14421,
-          'mtn_range': 'Sawatch Range',
           'drive_to_top': false,
-          'owner_id': 1,
+          'range_name': 'Sawatch Range'
         },
         {
           'id': 4,
           'name': 'Maroon Peak',
           'elevation': 14156,
-          'mtn_range': 'Elk Range',
           'drive_to_top': false,
-          'owner_id': 1,
+          'range_name': 'Elk Range'
         },
         {
           'id': 5,
           'name': 'Mt. Wilson',
           'elevation': 14246,
-          'mtn_range': 'San Juan Range',
           'drive_to_top': false,
-          'owner_id': 1,
+          'range_name': 'San Juan Range'
         },
         {
           'id': 6,
           'name': 'Blanca Peak',
           'elevation': 14345,
-          'mtn_range': 'Sangres Range',
           'drive_to_top': false,
-          'owner_id': 1,
+          'range_name': 'Sangres Range'
         }
       ];
 
@@ -99,7 +93,7 @@ describe('app routes', () => {
         'id': 1,
         'name': 'Mt. Evans',
         'elevation': 14264,
-        'mtn_range': 'Front Range',
+        'mtn_range_id': 1,
         'drive_to_top': true,
         'owner_id': 1,
       };
@@ -118,7 +112,7 @@ describe('app routes', () => {
         'id': 7,
         'name': 'Mt. Elbert',
         'elevation': 14433,
-        'mtn_range': 'Sawatch Range',
+        'mtn_range_id': 3,
         'drive_to_top': false,
         'owner_id': 1,
       };
@@ -127,7 +121,7 @@ describe('app routes', () => {
         .send({
           name: 'Mt. Elbert',
           elevation: 14433,
-          mtn_range: 'Sawatch Range',
+          mtn_range_id: 3,
           drive_to_top: false,
           owner_id: 1
         })
@@ -150,7 +144,7 @@ describe('app routes', () => {
         'id': 1,
         'name': 'Mt. Harvard',
         'elevation': 14420,
-        'mtn_range': 'Sawatch Range',
+        'mtn_range_id': 2,
         'drive_to_top': false,
         'owner_id': 1,
       };
@@ -159,7 +153,7 @@ describe('app routes', () => {
         .send({
           name: 'Mt. Harvard',
           elevation: 14420,
-          mtn_range: 'Sawatch Range',
+          mtn_range_id: 2,
           drive_to_top: false,
           owner_id: 1
         })
@@ -182,7 +176,7 @@ describe('app routes', () => {
         id: 1,
         name: 'Mt. Harvard',
         elevation: 14420,
-        mtn_range: 'Sawatch Range',
+        mtn_range_id: 2,
         drive_to_top: false,
         owner_id: 1,
       };
@@ -199,6 +193,43 @@ describe('app routes', () => {
 
       expect(data.body).toEqual(expectation);
       expect(allFourteeners.body.length).toEqual(6);
+    });
+
+    test.only('returns mountain ranges', async () => {
+
+      const expectation = [
+        {
+          id: 1,
+          name: 'Front Range',
+        },
+        {
+          id: 2,
+          name: 'Tenmile Range',
+        },
+        {
+          id: 3,
+          name: 'Sawatch Range',
+        },
+        {
+          id: 4,
+          name: 'Elk Range',
+        },
+        {
+          id: 5,
+          name: 'San Juan Range',
+        },
+        {
+          id: 6,
+          name: 'Sangres Range',
+        }
+      ];
+
+      const data = await fakeRequest(app)
+        .get('/mtn_ranges')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
     });
 
   });
