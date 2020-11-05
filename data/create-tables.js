@@ -19,14 +19,13 @@ async function run() {
                 ); 
                 CREATE TABLE mtn_ranges (
                   id SERIAL PRIMARY KEY,
-                  name: VARCHAR(256) NOT NULL
+                  name VARCHAR(256) NOT NULL
               );          
                 CREATE TABLE fourteeners (
                     id SERIAL PRIMARY KEY,
                     name VARCHAR(512) NOT NULL,
                     elevation INTEGER NOT NULL,
-                    mtn_range_id INTEGER NOT NULL 
-                    REFERENCES mtn_ranges(id),
+                    mtn_range_id INTEGER NOT NULL REFERENCES mtn_ranges(id),
                     drive_to_top BOOLEAN NOT NULL,
                     owner_id INTEGER NOT NULL REFERENCES users(id)
             );
